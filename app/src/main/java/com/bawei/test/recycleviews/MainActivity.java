@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 import okhttp3.Request;
 
-public class MainActivity extends AppCompatActivity  implements PullBaseView.OnHeaderRefreshListener,
+public class MainActivity extends AppCompatActivity implements PullBaseView.OnHeaderRefreshListener,
         PullBaseView.OnFooterRefreshListener {
 
     private String url = "http://m.yunifang.com/yunifang/mobile/goods/getall?random=39986&encode=2092d7eb33e8ea0a7a2113f2d9886c90&category_id=17";
@@ -42,14 +42,14 @@ public class MainActivity extends AppCompatActivity  implements PullBaseView.OnH
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-getSupportActionBar().hide();
+        getSupportActionBar().hide();
         //获得子控件
         mRecyclerView = (PullRecyclerView) findViewById(R.id.recycler);
 
         OkHttp.getAsync(url, new OkHttp.DataCallBack() {
             @Override
             public void requestFailure(Request request, IOException e) {
-System.out.print("数据加载失败‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘");
+                System.out.print("数据加载失败‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘’‘");
             }
 
             @Override
@@ -59,7 +59,7 @@ System.out.print("数据加载失败‘’‘’‘’‘’‘’‘’‘’�
                 DataBean db = gson.fromJson(json, DataBean.class);
                 ArrayList<DataBean.Data> mDatas = db.data;
                 Message message = new Message();
-                message.obj=mDatas;
+                message.obj = mDatas;
                 handler.sendMessage(message);
 //                //设置设配器
 //                mAdapter = new HomeAdapter(mDatas, MainActivity.this);
@@ -76,6 +76,10 @@ System.out.print("数据加载失败‘’‘’‘’‘’‘’‘’‘’�
         //GridView展示
         GridLayoutManager mGrid = new GridLayoutManager(this, 3);//
         mRecyclerView.setLayoutManager(mGrid);
+
+        //StaggeredGridLayoutManager展示
+
+        // mRecyclerView.setLayoutManager(new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL));
 
 
 //        //设置动画
